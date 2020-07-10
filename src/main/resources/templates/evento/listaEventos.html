@@ -9,44 +9,86 @@
       	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       	<!--Import materialize.css-->
       	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
-
+      	<link type="text/css" rel="stylesheet" href="/css/style.css">
+		
       	<!--Let browser know website is optimized for mobile-->
       	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      	<link rel="shortcut icon" href="">
 	</head>
-	<body>
+	<body class="body">
+		<header>
+			<nav class="teal">
+				<div class="nav-wrapper container">
+					<a href="/cadastrarEvento" class="brand-logo">Evento App</a>
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="/cadastrarEvento">Cadastrar Evento</a></li>
+						<li><a href="/eventos">Lista de Eventos</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
 	
-		<h4 class="center align">Eventos Cadastrados</h4>
-		
-		<div class="container">
-			<div class="row"> 
-				<div class="col s6 offset-s10">
-					<a href="/cadastrarEvento" class="waves-effect waves-light btn">
-						<i class="material-icons right">add_circle_outline</i>Novo Evento</a>
+		<main class="main">
+			<h4 class="center align">Eventos</h4>
+			
+			<div class="container">
+				<div class="row"> 
+					<div class="col s4 offset-s10">
+						<a href="/cadastrarEvento" class="waves-effect waves-light btn">
+							<i class="material-icons right">add_circle_outline</i>Novo Evento</a>
+					</div>
 				</div>
 			</div>
-		</div>
+			
+			<div class="container">
+				<table class="col s12">
+					<thead>
+						<tr>
+							<td>Nome</td>
+							<td>Local</td>
+							<td>Data</td>
+							<td>Horario</td>
+							<td>Deletar</td>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each= "evento : ${eventos}">
+							<td><a th:href="@{/{codigo}(codigo=${evento.codigo})}"><span th:text="${evento.nome}" ></span></a></td>			
+							<td><span th:text="${evento.local}"></span></td>			
+							<td><span th:text="${evento.data}"></span></td>			
+							<td><span th:text="${evento.horario}"></span></td>			
+							<td><a th:href="${(#mvc.url('EC#deletarEvento').arg(0, evento.codigo)).build()}">
+								<i class="material-icons left">delete</i><span></span></a></td>			
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</main>
 		
-		<div class="container">
-			<table class="col s10">
-				<thead>
-					<tr>
-						<td>Nome</td>
-						<td>Local</td>
-						<td>Data</td>
-						<td>Horario</td>
-					</tr>
-				</thead>
-				
-				<tbody>
-					<tr th:each= "evento : ${eventos}">
-						<td><a th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.codigo)).build()}"><span th:text="${evento.nome}" ></span></a></td>			
-						<td><span th:text="${evento.local}"></span></td>			
-						<td><span th:text="${evento.data}"></span></td>			
-						<td><span th:text="${evento.horario}"></span></td>			
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<footer class="page-footer teal darken-3 footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <p class="grey-text text-lighten-4 footer">Site feito com Spring Boot, JPA/Hibernate, Spring Data, Bean Validation, Thymeleaf e Materialize.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+              	<p>Entre em contato comigo: </p>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="https://www.linkedin.com/in/caioabreudev/" target="_blank">LinkedIn</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://github.com/caiorobertoabreu" target="_blank">GitHub</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://github.com/CaioRobertoAbreu/eventoapp" target="_blank">Código do projeto</a></li>
+                  <li>caio3015@hotmail.com</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container center align">
+            © 2020 Copyright Text
+            </div>
+          </div>
+        </footer>
 		
 		<!--JavaScript at end of body for optimized loading-->
       	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
